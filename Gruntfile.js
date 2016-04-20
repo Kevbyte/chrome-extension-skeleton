@@ -24,28 +24,28 @@ module.exports = function(grunt) {
       js: { options: { create: ['build/unpacked-dev/js'] } }
     },
 
-    jshint: {
-      options: grunt.file.readJSON('lint-options.json'), // see http://www.jshint.com/docs/options/
-      all: { src: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
-                   'code/**/*.json', '!code/js/libs/*'] }
-    },
-
-    mochaTest: {
-      options: { colors: true, reporter: 'spec' },
-      files: ['code/**/*.spec.js']
-    },
+    //jshint: {
+    //  options: grunt.file.readJSON('lint-options.json'), // see http://www.jshint.com/docs/options/
+    //  all: { src: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
+    //               'code/**/*.json', '!code/js/libs/*'] }
+    //},
+    //
+    //mochaTest: {
+    //  options: { colors: true, reporter: 'spec' },
+    //  files: ['code/**/*.spec.js']
+    //},
 
     copy: {
       main: { files: [ {
         expand: true,
         cwd: 'code/',
-        src: ['**', '!js/**', '!**/*.md'],
+        src: ['**', 'js/**', '!**/*.md'],
         dest: 'build/unpacked-dev/'
       } ] },
       prod: { files: [ {
         expand: true,
         cwd: 'build/unpacked-dev/',
-        src: ['**', '!js/*.js'],
+        src: ['**', 'js/*.js'],
         dest: 'build/unpacked-prod/'
       } ] },
       artifact: { files: [ {
@@ -77,15 +77,15 @@ module.exports = function(grunt) {
 
     uglify: {
       min: { files: fileMaps.uglify }
-    },
-
-    watch: {
-      js: {
-        files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
-                'code/**/*.json', '!code/js/libs/*'],
-        tasks: ['test']
-      }
     }
+
+    //watch: {
+    //  js: {
+    //    files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
+    //            'code/**/*.json', '!code/js/libs/*'],
+    //    tasks: ['test']
+    //  }
+    //}
 
   });
 
@@ -103,39 +103,39 @@ module.exports = function(grunt) {
   // custom tasks
   //
 
-  grunt.registerTask(
-    'manifest', 'Extend manifest.json with extra fields from package.json',
-    function() {
-      var fields = ['name', 'version', 'description'];
-      for (var i = 0; i < fields.length; i++) {
-        var field = fields[i];
-        mnf[field] = pkg[field];
-      }
-      grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(mnf, null, 4) + '\n');
-      grunt.log.ok('manifest.json generated');
-    }
-  );
+  //grunt.registerTask(
+  //  'manifest', 'Extend manifest.json with extra fields from package.json',
+  //  function() {
+  //    var fields = ['name', 'version', 'description'];
+  //    for (var i = 0; i < fields.length; i++) {
+  //      var field = fields[i];
+  //      mnf[field] = pkg[field];
+  //    }
+  //    grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(mnf, null, 4) + '\n');
+  //    grunt.log.ok('manifest.json generated');
+  //  }
+  //);
 
-  grunt.registerTask(
-    'circleci', 'Store built extension as CircleCI arfitact',
-    function() {
-      if (process.env.CIRCLE_ARTIFACTS) { grunt.task.run('copy:artifact'); }
-      else { grunt.log.ok('Not on CircleCI, skipped'); }
-    }
-  );
+  //grunt.registerTask(
+  //  'circleci', 'Store built extension as CircleCI arfitact',
+  //  function() {
+  //    if (process.env.CIRCLE_ARTIFACTS) { grunt.task.run('copy:artifact'); }
+  //    else { grunt.log.ok('Not on CircleCI, skipped'); }
+  //  }
+  //);
 
   //
   // testing-related tasks
   //
 
-  grunt.registerTask('test', ['jshint', 'mochaTest']);
-  grunt.registerTask('test-cont', ['test', 'watch']);
+  //grunt.registerTask('test', ['jshint', 'mochaTest']);
+  //grunt.registerTask('test-cont', ['test', 'watch']);
 
   //
   // DEFAULT
   //
 
-  grunt.registerTask('default', ['clean', 'test', 'mkdir:unpacked', 'copy:main', 'manifest',
-    'mkdir:js', 'browserify', 'copy:prod', 'uglify', 'exec', 'circleci']);
+  grunt.registerTask('default', ['mkdir:unpacked', 'copy:main',
+    'mkdir:js', 'browserify', 'copy:prod', 'uglify', 'exec']);
 
 };

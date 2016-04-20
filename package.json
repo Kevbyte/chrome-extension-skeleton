@@ -1,7 +1,7 @@
 {
-  "name": "extension-skeleton",
-  "version": "0.1.2",
-  "description": "Bare Google Chrome extension skeleton.",
+  "name": "Product Tagging Helper2",
+  "version": "1.2.0",
+  "description": "Fix product tags on the spot",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.5",

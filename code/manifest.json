@@ -1,18 +1,65 @@
 {
-  "manifest_version": 2,
-  "icons": { "128": "images/icon.png" },
-  "browser_action": {
-    "default_icon": "images/icon.png",
-    "default_popup": "html/popup.html"
-  },
-  "background": { "scripts": ["js/background.js"] },
-  "content_scripts": [{
-    "matches": [ "http://*/*", "https://*/*" ],
-    "js": [ "js/content.js" ]
-  }],
-  "options_page": "html/options.html",
-  "devtools_page": "html/devtools.html",
-  "permissions": [ "<all_urls>" ],
-  "web_accessible_resources": [ "js/*", "html/*", "css/*", "images/*" ],
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+    "name": "Product Tagging Helper2",
+    "version": "1.2.0",
+    "manifest_version": 2,
+    "description": "Fix product tags on the spot",
+    "homepage_url": "https://gecgithub01.walmart.com/Qarth/editorial-tool/",
+    "permissions": [
+        "notifications",
+        "storage",
+        "tabs",
+        "http://editorial.prod.cdqarth.prod.walmart.com/",
+        "http://editorial.stg.cdqarth.prod.walmart.com/",
+        "http://editorial.stg1.cdqarth.prod.walmart.com/",
+        "http://editorial.pqa.cdqarth.prod.walmart.com/",
+        "http://localhost:3000/"
+    ],
+    "icons": {
+        "16": "icons/tag.png",
+        "48": "icons/tag.png",
+        "128": "icons/tag.png"
+    },
+    "default_locale": "en",
+    "background": {
+        "page": "html/background.html",
+        "persistent": true
+    },
+    "page_action": {
+        "default_icon": "icons/tag.png",
+        "default_title": "Fix product tags",
+        "default_popup": "html/popup.html"
+    },
+
+    "web_accessible_resources": [
+        "fonts/*",
+        "icons/*"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": [
+                "http://www.walmart.com/*"
+            ],
+            "css": [
+                "css/bootstrap.css",
+                "css/font-awesome.css",
+                "css/select2.css",
+                "css/select2-bootstrap.css",
+                "css/inject.css"
+            ]
+        },
+        {
+            "matches": [
+                "http://www.walmart.com/*"
+            ],
+            "js": [
+                "js/libs/jquery-2.0.3.min.js",
+                "js/libs/bootstrap.min.js",
+                "js/libs/select2.min.js",
+                "js/libs/spin.js",
+                "js/content.js"
+            ]
+        }
+    ]
 }
+
