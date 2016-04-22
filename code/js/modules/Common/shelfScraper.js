@@ -1,7 +1,7 @@
 var urlGenerator = require('../Common/urlGenerator');
 
 
-module.exports.getShelfByMidas = function() {
+function getShelfByMidas () {
     var metadata;
 
     var text = $("#search-container").find("script").last().text();
@@ -60,4 +60,4 @@ module.exports.getShelf = function() {
     });
 
     return deferred;
-}
+};

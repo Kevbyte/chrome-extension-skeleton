@@ -1,9 +1,7 @@
-// module for allowing users to view and edit shelves on item page
-
-//var $ = require('../libs/jquery');
+// module for scraping productId from item page
 
 module.exports.getProductId = function() {
-    //scrape productId from walmart.com product page
+    //scrape productId from walmart.com item page
     var text = $(".js-product-page").next("script").text();
     var index = text.indexOf('define("product/data",');
     var text2 = text.substring(index + 'define("product/data",'.length);

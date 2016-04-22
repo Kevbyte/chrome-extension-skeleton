@@ -4,13 +4,14 @@
  * @type {{url: string, env: string}}
  */
 const DEFAULT_SERVER = {
-    url: "http://editorial.prod.cdqarth.prod.walmart.com",
-    env: "PROD"
+    url: "http://localhost:3000",
+    env: "LOCAL"
 };
 
 var tabUrl;
 
 function saveServerSettings(settings, callback) {
+
     chrome.storage.sync.set({server: settings}, callback);
 }
 
@@ -57,16 +58,16 @@ chrome.extension.onMessage.addListener(
 
     });
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    if (tab.url.slice(0,29) === "http://www.walmart.com/browse") {
-        chrome.pageAction.setIcon({
-            path: '../../icons/tag.png',
-            tabId: tabId
-        });
-    } else {
-        chrome.pageAction.setIcon({
-            path: '../../icons/tag_disabled.png',
-            tabId: tabId
-        });
-    }
-});
+//chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+//    if (tab.url.slice(0,29) === "http://www.walmart.com/browse") {
+//        chrome.pageAction.setIcon({
+//            path: '../../icons/tag.png',
+//            tabId: tabId
+//        });
+//    } else {
+//        chrome.pageAction.setIcon({
+//            path: '../../icons/tag_disabled.png',
+//            tabId: tabId
+//        });
+//    }
+//});

@@ -20,14 +20,15 @@
         "128": "icons/tag.png"
     },
     "default_locale": "en",
+
     "background": {
-        "page": "html/background.html",
-        "persistent": true
+        "scripts": ["js/bg/background.js"]
     },
+
     "page_action": {
         "default_icon": "icons/tag.png",
         "default_title": "Fix product tags",
-        "default_popup": "html/popup.html"
+        "default_popup": "js/page_action/popup.html"
     },
 
     "web_accessible_resources": [
@@ -57,6 +58,8 @@
                 "js/libs/bootstrap.min.js",
                 "js/libs/select2.min.js",
                 "js/libs/spin.js",
+                "js/libs/handlebars-v4.0.5.js",
+                "templates/js/templates.js",
                 "js/content.js"
             ]
         }

@@ -1,24 +1,32 @@
-module.exports.formatResult = function(item) {
-    if (item.loading) return item.text;
+//module for helper functions
 
-    var markup = '<div class="clearfix">' +
-        '<div>' + item.name +
-        '<span style="color: #cccccc"> (' + getItemPath(item) + ')</span>' +
-        '</div>';
+var urlGenerator = require('../Common/urlGenerator');
 
-    return markup;
-};
-
-module.exports.getItemPath = function(item) {
+function exposeItemPath(item) {
     var itemPaths = item.relations.parent.expanded;
     var paths = [];
     for (var i = 0; i < itemPaths.length; i++) {
         paths.push(itemPaths[i].name);
     }
     return paths.reverse().join(" > ");
+}
+
+function formatResult(item) {
+    if (item.loading) return item.text;
+
+    var markup = '<div class="clearfix">' +
+        '<div>' + item.name +
+        '<span style="color: #cccccc"> (' + exposeItemPath(item) + ')</span>' +
+        '</div>';
+
+    return markup;
 };
 
-module.exports.formatSelection = function(item) {
+module.exports.getItemPath = function(item) {
+    return exposeItemPath(item);
+};
+
+function formatSelection (item) {
     return item.name;
 };
 
@@ -27,7 +35,7 @@ module.exports.createSelectOptions = function() {
         minimumInputLength: 1,
         placeholder: "Search shelves...",
         ajax: {
-            url: taxonomyUrl(),
+            url: urlGenerator.taxonomyUrl(),
             type: "GET",
             headers: {"X-Requested-With": "XMLHttpRequest"},
             dataType: 'json',

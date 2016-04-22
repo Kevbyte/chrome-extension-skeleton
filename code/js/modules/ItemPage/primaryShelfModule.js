@@ -1,29 +1,21 @@
-// module for allowing users to view and edit shelves on item page
+// module for allowing users to view and edit primary shelf on item page
 
 //var $ = require('../libs/jquery');
 var productIDScraper = require('../Common/productIDScraper');
 var supportUtil = require('../Common/supportUtil');
+var confirmationUtil = require('../Common/confirmationUtil');
 
 
 module.exports.injectPrimaryShelfEditor = function(options) {
     var url = window.location.pathname;
     var itemId = url.substring(url.lastIndexOf('/') + 1);
 
-    function editShelfPopupContent() {
-
-        return "<div style='width: 500px; height: 320px;'>" +
-            "Please choose a new primary shelf for item \"" + itemId + "\"" +
-            "<div style='padding: 6px 0'>" +
-            "<input class='js-select-tag_ select-tag_'>" +
-            "<div class='js-tag-path_ text-muted' style='padding-top: 10px;'/>" +
-            "<div class='note_ small text-muted'>We will submit your recommendation to change the primary shelf of this item - this will be reviewed within 2 days.</div>" +
-            "<div class='yes-no-toolbar_ btn-toolbar' role='toolbar'>" +
-            "<button class='js-confirm-accept-btn dialog-btn_ btn btn-sm btn-primary disabled' type='button'>OK</button>" +
-            "<button class='js-cancel-btn dialog-btn_ btn btn-sm btn-default' type='button'>Cancel</button>" +
-            "</div>" +
-            "</div>" +
-            "</div>";
-    }
+    // Load in the overridePopupContent template so it can be used in the popover
+    var template = Handlebars.templates.overridePopupContent;
+    var overridePopupContent = template({
+        "text": "Please choose a new primary shelf for item " + itemId + "(" + productIDScraper.getProductId() + "):",
+        "note": "We will submit your recommendation to change the primary shelf of this item - this will be reviewed within 2 days."
+    });
 
     if (options && options.noShelf) {
         $(".js-product-page .breadcrumb-list nav").append(
@@ -45,7 +37,7 @@ module.exports.injectPrimaryShelfEditor = function(options) {
     var selector = $(".js-edit-shelf-button");
 
     $('.js-edit-btn').popover({
-        content: editShelfPopupContent,
+        content: overridePopupContent,
         html: true,
         placement: "right",
         trigger: "manual",
@@ -57,12 +49,12 @@ module.exports.injectPrimaryShelfEditor = function(options) {
             $(selector).find(".js-confirm-accept-btn").removeClass("disabled");
         });
 
-        $(selector).off("click", ".js-confirm-accept-btn").on("click", ".js-confirm-accept-btn", onConfirmEdit);
-        $(selector).off("click", ".js-cancel-btn").on("click", ".js-cancel-btn", onTogglePopover);
+        $(selector).off("click", ".js-confirm-accept-btn").on("click", ".js-confirm-accept-btn", confirmationUtil.onConfirmEdit);
+        $(selector).off("click", ".js-cancel-btn").on("click", ".js-cancel-btn", supportUtil.onTogglePopover);
 
     }).on("hide.bs.popover", function (e) {
         $(selector).find(".js-select-tag_").select2("destroy");
     });
 
-    $(selector).on("click", ".js-edit-btn", toggleItemPagePopover);
+    $(selector).on("click", ".js-edit-btn", supportUtil.toggleItemPagePopover);
 };
