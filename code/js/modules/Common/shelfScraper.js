@@ -1,4 +1,6 @@
-var urlGenerator = require('../Common/urlGenerator');
+//var urlGenerator = require('../Common/urlGenerator');
+
+import * as urlGenerator from '../Common/urlGenerator';
 
 
 function getShelfByMidas () {
@@ -23,7 +25,7 @@ function getShelfByMidas () {
     };
 }
 
-module.exports.getShelf = function() {
+export function getShelf() {
     var shelf = getShelfByMidas();
 
     if (!shelf) {
@@ -60,4 +62,4 @@ module.exports.getShelf = function() {
     });
 
     return deferred;
-};
+}

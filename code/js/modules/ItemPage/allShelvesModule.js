@@ -1,13 +1,14 @@
 // module for allowing users to view and edit shelves on item page
 
-var productIDScraper = require('../Common/productIDScraper');
-var primaryShelfModule = require('../ItemPage/primaryShelfModule');
-var urlGenerator = require('../Common/urlGenerator');
-var supportUtil = require('../Common/supportUtil');
-var confirmationUtil = require('../Common/confirmationUtil');
+import * as productIDScraper from '../Common/productIDScraper';
+import * as urlGenerator from '../Common/urlGenerator';
+import * as primaryShelfModule from '../ItemPage/primaryShelfModule';
+import * as supportUtil from '../Common/supportUtil';
+import * as confirmationUtil from '../Common/confirmationUtil';
 
 
-module.exports.injectAllShelves = function () {
+
+export function injectAllShelves() {
     var productId = productIDScraper.getProductId();
     //use this productId for development testing and then delete it for deployment
     var productId = '72XR8X38E3TZ';
@@ -162,4 +163,4 @@ module.exports.injectAllShelves = function () {
 
     $(selector).on("click", supportUtil.toggleItemPagePopover);
 
-};
+}

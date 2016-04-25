@@ -4,6 +4,7 @@ var gulp = require("gulp"),
     gutil = require("gulp-util"),
     clean = require('gulp-clean'),
     cleanhtml = require('gulp-cleanhtml'),
+    run = require('gulp-run'),
     source = require("vinyl-source-stream"),
     rename = require("gulp-rename"),
     browserify = require("browserify"),
@@ -22,9 +23,9 @@ var BUILD_DIR = "./build";
 // Define input files to bundle
 
 var FILES = [
-    "js/content.js",
-    "js/bg/background.js",
-    "js/page_action/popup.js"
+    "js/content.js"
+    //"js/bg/background.js"
+    //"js/page_action/popup.js"
 ];
 
 // Grab all the js files from module folders (if you add a new folder to the file system you must add it here too)
@@ -90,11 +91,14 @@ gulp.task('copy', function() {
     gulp.src('code/templates/**')
 		.pipe(gulp.dest('build/templates'));
     gulp.src('code/css/**')
+        .pipe(minifycss())
 		.pipe(gulp.dest('build/css'));
     gulp.src('code/js/libs/**')
 		.pipe(gulp.dest('build/js/libs'));
-    gulp.src('code/js/page_action/popup.html')
+    gulp.src('code/js/page_action/**')
 		.pipe(gulp.dest('build/js/page_action'));
+    gulp.src('code/js/bg/**')
+		.pipe(gulp.dest('build/js/bg'));
 	return gulp.src('code/manifest.json')
 		.pipe(gulp.dest('build'));
 });
@@ -111,12 +115,14 @@ gulp.task('clean', function() {
 		.pipe(clean());
 });
 
-gulp.task("build", function () {
+gulp.task("translate", function () {
     return build(false, true);
 });
 
-//gulp.task("watch", function () {
-//    return build(true, false);
-//});
+gulp.task("build", ['copy', 'html', 'translate']);
 
-gulp.task("default", ['copy', 'html', 'build']);
+gulp.task("default", ['clean'], function() {
+    run('handlebars code/templates/*.handlebars -f code/templates/js/templates.js').exec()
+    gulp.start('build');
+
+});

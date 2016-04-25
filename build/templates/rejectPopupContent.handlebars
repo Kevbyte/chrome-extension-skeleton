@@ -1,0 +1,11 @@
+<div id='rejectPopup' style='width: 300px; height: 200px'>
+    Are you sure item {{itemId}} does not belong on shelf {{shelfName}} ({{shelfId}})?
+    <div class='js-yes-no-reject-toolbar yes-no-toolbar_ btn-toolbar' role='toolbar' style='text-align:center'>
+        {{#if allShelves}}
+            <button class='js-confirm-reject-btn dialog-btn_ btn btn-sm btn-primary' type='button' data-shelf-id={{shelfId}}>OK</button>
+        {{else}}
+            <button class='js-confirm-reject-btn dialog-btn_ btn btn-sm btn-primary disabled' type='button'>OK</button>
+        {{/if}}
+        <button class='js-cancel-btn dialog-btn_ btn btn-sm btn-default' type='button'>Cancel</button>
+    </div>
+</div>

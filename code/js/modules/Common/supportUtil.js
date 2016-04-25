@@ -1,6 +1,6 @@
 //module for helper functions
 
-var urlGenerator = require('../Common/urlGenerator');
+import * as urlGenerator from '../Common/urlGenerator';
 
 function exposeItemPath(item) {
     var itemPaths = item.relations.parent.expanded;
@@ -20,17 +20,17 @@ function formatResult(item) {
         '</div>';
 
     return markup;
-};
+}
 
-module.exports.getItemPath = function(item) {
+export function getItemPath(item) {
     return exposeItemPath(item);
-};
+}
 
 function formatSelection (item) {
     return item.name;
-};
+}
 
-module.exports.createSelectOptions = function() {
+export function createSelectOptions() {
     return {
         minimumInputLength: 1,
         placeholder: "Search shelves...",
@@ -61,10 +61,10 @@ module.exports.createSelectOptions = function() {
         formatResult: formatResult,
         formatSelection: formatSelection
     }
-};
+}
 
 
-module.exports.createErrorHandler = function(title) {
+export function createErrorHandler(title) {
     return function (xhr, status, error) {
         chrome.extension.sendMessage({
             type: "NOTIFY",
@@ -72,23 +72,23 @@ module.exports.createErrorHandler = function(title) {
             message: "(" + status + ") " + (xhr.responseText || error)
         });
     }
-};
+}
 
-module.exports.toggleItemPagePopover = function() {
+export function toggleItemPagePopover() {
     if ($(this).parent().find(".popover.in").length === 0) {
         $(this).popover("show");
     } else {
         $(this).popover("hide");
     }
-};
+}
 
-module.exports.onTogglePopover = function() {
+export function onTogglePopover() {
     if ($(this).closest(".popover.in").length === 0) {
         $(this).popover("show");
     } else {
         $(this).closest(".popover.in").popover("hide");
         return false;
     }
-};
+}
 
 

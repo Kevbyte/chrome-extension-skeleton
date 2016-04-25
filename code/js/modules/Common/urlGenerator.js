@@ -1,24 +1,27 @@
 //module for generating urls for api calls
 
-var content = require('../../content');
+//var content = require('../../content');
 
-module.exports.tagUrl = function() {
+import * as content from '../../content';
+
+
+export function tagUrl() {
     if (content.exposeSERVER()) {
         return content.exposeSERVER().url + "/tagging/producttags";
     }
-};
+}
 
-module.exports.taxonomyUrl = function() {
+export function taxonomyUrl() {
     if (content.exposeSERVER()) {
         return content.exposeSERVER().url + "/tagging/taxonomy/nodes";
     }
-};
+}
 
-module.exports.catalogUrl = function() {
+export function catalogUrl() {
     return content.exposeSERVER().url + "/tagging/shelfCount";
-};
+}
 
-module.exports.allShelvesUrl = function() {
+export function allShelvesUrl() {
     return content.exposeSERVER().url + "/tagging/products";
-};
+}
 

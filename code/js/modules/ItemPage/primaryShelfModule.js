@@ -1,12 +1,12 @@
 // module for allowing users to view and edit primary shelf on item page
 
-//var $ = require('../libs/jquery');
-var productIDScraper = require('../Common/productIDScraper');
-var supportUtil = require('../Common/supportUtil');
-var confirmationUtil = require('../Common/confirmationUtil');
+import * as productIDScraper from '../Common/productIDScraper';
+import * as supportUtil from '../Common/supportUtil';
+import * as confirmationUtil from '../Common/confirmationUtil';
 
 
-module.exports.injectPrimaryShelfEditor = function(options) {
+
+export function injectPrimaryShelfEditor(options) {
     var url = window.location.pathname;
     var itemId = url.substring(url.lastIndexOf('/') + 1);
 
@@ -57,4 +57,4 @@ module.exports.injectPrimaryShelfEditor = function(options) {
     });
 
     $(selector).on("click", ".js-edit-btn", supportUtil.toggleItemPagePopover);
-};
+}

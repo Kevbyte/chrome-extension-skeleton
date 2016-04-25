@@ -1,12 +1,11 @@
 //module for injecting toolbar onto shelving page for Move-to and Reject functionality
 
-var productIDScraper = require('../Common/productIDScraper');
-var urlGenerator = require('../Common/urlGenerator');
-var supportUtil = require('../Common/supportUtil');
-var confirmationUtil = require('../Common/confirmationUtil');
-var content = require('../../content');
+import * as content from '../../content';
+import * as urlGenerator from '../Common/urlGenerator';
+import * as supportUtil from '../Common/supportUtil';
+import * as confirmationUtil from '../Common/confirmationUtil';
 
-module.exports.injectToolbar = function() {
+export function injectToolbar() {
     function createRejectPopupContent() {
         var $tile = $(this).closest(".tile-grid-unit");
         var itemId = $tile.data("item-id");
@@ -110,4 +109,4 @@ module.exports.injectToolbar = function() {
     $("#search-container").on("click", ".js-confirm-reject-btn", confirmationUtil.onConfirmReject);
     $("#search-container").on("click", ".js-confirm-accept-btn", confirmationUtil.onConfirmAccept);
     $("#search-container").on("click", ".js-cancel-btn", supportUtil.onTogglePopover);
-};
+}

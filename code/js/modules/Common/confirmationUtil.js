@@ -1,13 +1,13 @@
 //module for dealing with user tagging confirmations
 
-var productIDScraper = require('../Common/productIDScraper');
-var urlGenerator = require('../Common/urlGenerator');
-var supportUtil = require('../Common/supportUtil');
-var content = require('../../content');
+import * as content from '../../content';
+import * as productIDScraper from '../Common/productIDScraper';
+import * as urlGenerator from '../Common/urlGenerator';
+import * as supportUtil from '../Common/supportUtil';
 
 var SPIN_OPTIONS = {lines: 6, length: 10, width: 8, radius: 10, rotate: 90, color: "#FFB94E", className: "spinner_"};
 
-module.exports.onConfirmReject = function(e) {
+export function onConfirmReject(e) {
     var $this = $(this);
     var $tile = $(this).closest(".tile-grid-unit");
     var itemId = $tile.data("item-id");
@@ -63,15 +63,15 @@ module.exports.onConfirmReject = function(e) {
     });
 
     return false;
-};
+}
 
-module.exports.onConfirmAdd = function(e) {
+export function onConfirmAdd(e) {
     var url = window.location.pathname;
     var itemId = url.substring(url.lastIndexOf('/') + 1);
     var productId = productIDScraper.getProductId();
     //use this for development testing and then delete it for deployment
     var productId = '72XR8X38E3TZ'
-    var data = $(".js-add-shelf-section").find(".js-select-tag_").select2("data");
+    var data = $(".js-add-shelf-btn").parent().find(".js-select-tag_").select2("data");
     var newValueIds = [data.category_id];
     var newShelfName = data.name;
     var $popover = $(".js-add-shelf-btn").parent().find(".popover.in");
@@ -103,9 +103,9 @@ module.exports.onConfirmAdd = function(e) {
     });
 
     return false;
-};
+}
 
-module.exports.onConfirmAccept = function(e) {
+export function onConfirmAccept(e) {
     var $tile = $(this).closest(".tile-grid-unit");
     var itemId = $tile.data("item-id");
     //for testing:
@@ -164,9 +164,9 @@ module.exports.onConfirmAccept = function(e) {
     });
 
     return false;
-};
+}
 
-module.exports.onConfirmEdit = function(e) {
+export function onConfirmEdit(e) {
     var url = window.location.pathname;
     var itemId = url.substring(url.lastIndexOf('/') + 1);
     var productId = productIDScraper.getProductId();
@@ -215,4 +215,4 @@ module.exports.onConfirmEdit = function(e) {
     });
 
     return false;
-};
+}

@@ -1,21 +1,27 @@
-var toolBarModule = require('./modules/ShelfPage/toolBarModule');
-var itemShelvesModule = require('./modules/ItemPage/allShelvesModule');
-var pcfModule = require('./modules/ItemPage/pcfModule');
-var shelfScraper = require('../js/modules/Common/shelfScraper');
+//var toolBarModule = require('./modules/ShelfPage/toolBarModule');
+//var itemShelvesModule = require('./modules/ItemPage/allShelvesModule');
+//var pcfModule = require('./modules/ItemPage/pcfModule');
+//var shelfScraper = require('../js/modules/Common/shelfScraper');
+
+import { getShelf } from '../js/modules/Common/shelfScraper';
+import * as toolBarModule from './modules/ShelfPage/toolBarModule';
+import * as itemShelvesModule from './modules/ItemPage/allShelvesModule';
+import * as pcfModule from './modules/ItemPage/pcfModule';
+
 
 var shelf;
 var SERVER;
 var PAGE;
 
-module.exports.exposeSERVER = function() {
+export function exposeSERVER() {
     return SERVER
 };
 
-module.exports.exposePAGE = function() {
+export function exposePAGE() {
     return PAGE;
 };
 
-module.exports.exposeShelf = function() {
+export function exposeShelf() {
    return shelf;
 };
 
@@ -25,7 +31,7 @@ function observeSearchContainer() {
 
     var observer = new MutationObserver(function (mutations, observer) {
         shelf = null;
-        shelfScraper.getShelf().done(function (result) {
+        getShelf().done(function (result) {
             shelf = result;
             toolBarModule.injectToolbar();
         });
@@ -44,7 +50,7 @@ chrome.extension.sendMessage({type: "SHOW_PRODUCT_PAGE_ACTION"}, function (respo
         SERVER = response.server;
         PAGE = "Product page";
 
-        shelfScraper.getShelf().done(function (result) {
+        getShelf().done(function (result) {
             shelf = result;
             pcfModule.injectPCFLink();
             itemShelvesModule.injectAllShelves();
@@ -60,7 +66,7 @@ chrome.extension.sendMessage({type: "SHOW_SHELF_PAGE_ACTION"}, function (respons
     } else {
         SERVER = response.server;
 
-        shelfScraper.getShelf().done(function (result) {
+        getShelf().done(function (result) {
             shelf = result;
             toolBarModule.injectToolbar();
         });
@@ -75,7 +81,7 @@ chrome.extension.onMessage.addListener(
             SERVER = request.server;
 
             if (!shelf) {
-                shelfScraper.getShelf().done(function (result) {
+                getShelf().done(function (result) {
                     shelf = result;
                     //injectToolbar();
                 });
